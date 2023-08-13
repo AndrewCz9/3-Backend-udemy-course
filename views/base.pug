@@ -1,0 +1,50 @@
+//- Pug is a template engine
+//- doctype html 
+//- html
+//-   head
+//-     //- interpolation
+//-     title Natours | #{tour}
+//-     link(rel='stylesheet' href='css/style.css')
+//-     link(rel='shortcut icon' type='image/png' href='img/favicon.png')
+
+//-   body 
+//-     h1= tour 
+//-     //- buffered code:
+//-     h2= user.toUpperCase() 
+//-     // h1 The Park Camper - this comment is visible in the console
+//-     //- h1 The Park Camper - this comment is NOT visible in the console
+
+//-     //- unbuffered code:
+//-     - const x = 9;
+//-     h2= 2 * x
+
+
+//-     p This is just some text
+doctype html 
+html
+  head
+    block head
+      meta(charset='UTF-8')
+      meta(name='viewport' content='width=device-width, initial-scale=1.0')
+      link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+      link(rel='stylesheet' href='/css/style.css')
+      link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
+      title Natours | #{title}
+
+  body
+    // HEADER 
+    include _header
+
+    // CONTENT
+    block content 
+      h1 This is a placeholder heading
+
+    // FOOTER
+    include _footer
+
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(type='module' src='/js/login.js')
+    script(type='module' src='/js/index.js')
+    script(src="https://js.stripe.com/v3/")
+    script(src='/js/bundle.js' type='module')
+    
