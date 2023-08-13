@@ -179,18 +179,12 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   // await user.save({ validateBeforeSave: false });
   await user.save({ validateModifiedOnly: true });
 
-  // const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`;
-
   // 3) Send it to user's email
   try {
     const resetURL = `${req.protocol}://${req.get(
       'host'
     )}/api/v1/users/resetPassword/${resetToken}`;
-    // await sendEmail({
-    //   email: user.email,
-    //   subject: 'Your password reset token (valid for 10 min)',
-    //   message,
-    // });
+
     await new Email(user, resetURL).sendPasswordReset();
 
     res.status(200).json({
@@ -249,7 +243,6 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   user.password = req.body.password;
   user.passwordConfirm = req.body.passwordConfirm;
   await user.save();
-  // User.findByIdAndUpdate will NOT work as intended!
 
   // 4) Log the user in, send JWT
   createSendToken(user, 200, res);

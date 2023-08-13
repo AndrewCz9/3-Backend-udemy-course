@@ -8,17 +8,6 @@ const router = express.Router(); // middleware function
 //  middleware that only runs when 'id' is present in the URL
 // router.param('id', tourController.checkID);
 
-/*
-router.param('id', (req, res, next, val) => {
-  console.log(`Tour id is: ${val}`);
-  next();
-});
-*/
-
-// nested routes
-// POST /tour/234f5d8/reviews
-// GET /tour/234f5d8/reviews
-
 router.use('/:tourId/reviews', reviewRouter);
 
 router
@@ -37,8 +26,6 @@ router
 router
   .route('/tours-within/:distance/center/:latlng/unit/:unit')
   .get(tourController.getToursWithin);
-// /tour-within?distance=233&center=-40,45&unit=im - użytkownik musiałby tak podać dane (dotychczasowa metoda)
-// /tour-within/233/center/-40,45/unit/mi - wykożystana w tym przypadku metoda
 
 router.route('/distances/:latlng/unit/:unit').get(tourController.getDistances);
 

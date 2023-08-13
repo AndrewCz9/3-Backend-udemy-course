@@ -78,20 +78,12 @@ userSchema.pre(/^find/, function (next) {
 
 // instance method
 
-// porównywanie haseł - kod z kursu - błędnie założono że this.password nie wskaże na hasło wysłane przez usera
-
 userSchema.methods.correctPassword = async function (
   candidatePassword,
   userPassword
 ) {
   return await bcrypt.compare(candidatePassword, userPassword);
 };
-
-/* ale z jakiegoś powodu compare daje false
-userSchema.methods.correctPassword = async function (userPassword) {
-  return await bcrypt.compare(userPassword, this.password);
-};
-*/
 
 userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   // this points to the current document

@@ -1,7 +1,6 @@
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const APIFeatures = require('../utils/apiFeatures');
-// const { populate } = require('../models/reviewModel');
 
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
@@ -59,32 +58,6 @@ exports.getOne = (Model, popOptions) =>
       data: { data: doc },
     });
   });
-
-/*
-exports.getAll = (Model) =>
-  catchAsync(async (req, res, next) => {
-    // To allow for nested GET reviews on tour (hack)
-    let filter = {};
-    if (req.params.tourId) filter = { tour: req.params.tourId };
-
-    const features = new APIFeatures(Model.find(filter), req.query)
-      .filter()
-      .sort()
-      .limitFields()
-      .paginate();
-
-    const doc = await features.query;
-
-    res.status(200).json({
-      status: 'success',
-      results: doc.length,
-      data: { data: doc },
-    });
-  });
-*/
-
-// https://www.udemy.com/course/nodejs-express-mongodb-bootcamp/learn/lecture/15065540#questions/16813340
-
 const getCollectionName = (Model) => Model.collection.collectionName;
 
 const getFilterObj = ({ paramName, foreignField }, req) => {
@@ -106,7 +79,6 @@ exports.getAll = (Model, options) =>
       .limitFields()
       .paginate();
 
-    // const docs = await apiFeatures.query.explain().exec();
     const docs = await apiFeatures.query.exec();
 
     res.status(200).json({

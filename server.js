@@ -27,17 +27,12 @@ mongoose.set('strictQuery', false);
 
 async function main() {
   await mongoose.connect(DB);
-  // .then((conn) => {
-  //   console.log('conn', conn.connections);
-  // });
 }
 main().then(() => {
   console.log('DB connection successful!');
 });
-/*
-  .catch((err) => console.log(err));
-*/
-//TODO 4) START SERVER
+
+// START SERVER
 
 const port = process.env.PORT || 3000; // work on port 8000 or on port 3000
 // To start the server
@@ -52,50 +47,3 @@ process.on('unhandledRejection', (err) => {
     process.exit(1);
   });
 });
-
-/*
-So now the request-response path will be as follow:
-
-Request sent to server
-     -> server.js
-          -> app.js (res and req object go through all the middlewares)
-               -> routes (depends on the path, handled by respective router - userRoutes/tourRoutes)
-                    -> controllers (depend on which HTTP method, handled by respective controllers - userControllers/tourControllers)
-                         -> END of the request-response flow
-*/
-
-/*
-We use nodemon server.js to start the process. But if you want to set an environment variable for this process, we need to pre-plan that variable to this command.
-In terminal:
-* for windows: 
-* -* in CMD: SET NODE_ENV=development& nodemon server.js
-* ---* multiple variables: set NODE_ENV=development&&SET X=23& nodemon server.js
-* -* in Powershell: SET NODE_ENV=development;nodemon server.js
-* -* in GIT BASH: NODE_ENV=development nodemon server.js
-* ---* multiple variables: NODE_ENV=development X=23 nodemon server.js
-* --* in package.json script: SET NODE_ENV=production& nodemon server.js
-
-* ----- look for the universal solution for all platforms
-
-* for linux and mac 
-* -* any terminal: NODE_ENV=development nodemon server.js 
-* ---* Multiple variables: NODE_ENV=development X=23 nodemon server.js
-*/
-
-/*
-// new document
-const testTour = new Tour({
-  name: 'The Park Camper',
-  price: 997,
-});
-
-// saving the document to DB, it returns a promise
-testTour
-  .save()
-  .then((doc) => {
-    console.log(doc);
-  })
-  .catch((err) => {
-    console.log('ERROR 💥:', err);
-  });
-*/

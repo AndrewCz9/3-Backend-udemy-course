@@ -14,7 +14,6 @@ class APIFeatures {
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
 
     this.query = this.query.find(JSON.parse(queryStr));
-    // let query = Tour.find(JSON.parse(queryStr)); - we do not want to query the tour directly (this method should be reusable)
 
     return this; // return an entire object
   }
@@ -49,7 +48,6 @@ class APIFeatures {
     const limit = this.queryString.limit * 1 || 100;
     const skip = (page - 1) * limit;
 
-    // page=2&limit=10, 1-10 page 1, 11-20, page 2, 21-30, page 3
     this.query = this.query.skip(skip).limit(limit);
 
     return this;

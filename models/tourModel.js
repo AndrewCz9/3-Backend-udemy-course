@@ -1,8 +1,6 @@
 /* eslint-disable prefer-arrow-callback */
 const mongoose = require('mongoose');
 const slugify = require('slugify');
-// const User = require('./userModel');
-// const validator = require('validator');
 
 // (Mongoose) Model is like a blueprint that we use to create a document (like classes in JS). Also we use it to query update and delete these documents. And to create a model we need a schema
 const tourSchema = new mongoose.Schema(
@@ -15,7 +13,6 @@ const tourSchema = new mongoose.Schema(
       // only for strings
       maxlength: [40, 'A tour name must have less or equal then 40 characters'],
       minlength: [10, 'A tour name must have more or equal then 10 characters'],
-      // validate: [validator.isAlpha, 'Tour name must only contain characters'],
     },
     slug: String,
     duration: {
@@ -119,7 +116,6 @@ const tourSchema = new mongoose.Schema(
   }
 );
 
-// tourSchema.index({ price: 1 }); // 1-ascending order, -1-descending
 tourSchema.index({ price: 1, ratingsAverage: -1 }); // compound index
 tourSchema.index({ slug: 1 });
 tourSchema.index({ startLocation: '2dsphere' }); // earth-like sphere
@@ -144,31 +140,8 @@ tourSchema.pre('save', function (next) {
   next();
 });
 
-// code responsible for embedding
-// tourSchema.pre('save', async function () {
-//   const guidesPromises = this.guides.map((id) => User.findById(id).exec());
-//   this.guides = await Promise.all(guidesPromises);
-// });
-
-/*
-tourSchema.pre('save', function (next) {
-  console.log('Will save document...');
-  next();
-});
-
-
-// post - runs after the document has been saved
-// it have access to the document that was just saved to the DB
-tourSchema.post('save', function (doc, next) {
-  console.log(doc);
-  next();
-});
-*/
-
 // QUERY MIDDLEWARE (mongoose): runs functions before or after a certain query is executed
 tourSchema.pre(/^find/, function (next) {
-  // tourSchema.pre('find', function (next) {
-  // this - points to the query
   this.find({ secretTour: { $ne: true } });
 
   this.start = Date.now();
@@ -191,14 +164,6 @@ tourSchema.post(/^find/, function (docs, next) {
 });
 
 // AGGREGATION MIDDLEWARE (mongoose):
-/*
-tourSchema.pre('aggregate', function (next) {
-  // this - current aggregation object
-  this._pipeline.unshift({ $match: { secretTour: { $ne: true } } });
-  // console.log(this.pipeline());
-  next();
-});
-*/
 
 // Q&A
 tourSchema.pre('aggregate', function (next) {
