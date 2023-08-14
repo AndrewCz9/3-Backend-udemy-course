@@ -8,7 +8,8 @@
   },
   "browserslist": "last 2 versions",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
+    "start:dev": "nodemon server.js",
     "start:prod": "SET NODE_ENV=production& nodemon server.js",
     "debug": "node --inspect server.js",
     "watch": "esbuild ./public/js/index.js --bundle --outfile=./public/js/bundle.js --watch",
