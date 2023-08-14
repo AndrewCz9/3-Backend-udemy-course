@@ -46,7 +46,7 @@
     try {
       const res = await axios({
         method: "POST",
-        url: "http://127.0.0.1:8000/api/v1/users/login",
+        url: "/api/v1/users/login",
         data: {
           email,
           password
@@ -66,7 +66,7 @@
     try {
       const res = await axios({
         method: "GET",
-        url: "http://127.0.0.1:8000/api/v1/users/logout"
+        url: "/api/v1/users/logout"
       });
       if (res.data.status === "success")
         location.reload(true);
@@ -78,7 +78,7 @@
   // public/js/updateSettings.js
   var updateSettings = async (data, type) => {
     try {
-      const url = type === "password" ? "http://127.0.0.1:8000/api/v1/users/updateMyPassword" : "http://127.0.0.1:8000/api/v1/users/updateMe";
+      const url = type === "password" ? "/api/v1/users/updateMyPassword" : "/api/v1/users/updateMe";
       const res = await axios({
         method: "PATCH",
         url,
@@ -94,12 +94,9 @@
 
   // public/js/stripe.js
   var bookTour = async (tourId) => {
-    const stripe = Stripe(
-      "pk_test_51Nct4lKQaMvT0W6wHyZFngklgKvmwUSXC3Xn23UNwkqwUbZDJRoY1IKQmvkf9qM4susLH8vSwP56Gud2PXrvGDTi00ixwLc7dn"
-    );
+    const stripe = Stripe(process.env.STRIPE_TEST_KEY);
     try {
       const session = await axios(`/api/v1/bookings/checkout-session/${tourId}`);
-      console.log(session);
       await stripe.redirectToCheckout({
         sessionId: session.data.session.id
       });
@@ -136,7 +133,6 @@
       form.append("name", document.getElementById("name").value);
       form.append("email", document.getElementById("email").value);
       form.append("photo", document.getElementById("photo").files[0]);
-      console.log(form);
       updateSettings(form, "data");
     });
   if (updatePasswordForm)
